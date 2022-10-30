@@ -1,8 +1,7 @@
 name: TypeScript Compiler Validator
 on: [push]
 jobs:
-  TypeScript Compiler Validator:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "🔎 Сейчас будет произведен поиск ошибок в typeScript"
-      - run: echo npm run ts
+  runs-on: ubuntu-latest
+  steps:
+    - run: echo "🔎 Сейчас будет произведен поиск ошибок в typeScript"
+    - run: echo npm run ts
