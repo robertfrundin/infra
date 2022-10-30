@@ -5,4 +5,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "🔎 Сейчас будет произведен поиск ошибок в typeScript"
-      - run: echo npm run ts
+      - run: npm run ts
