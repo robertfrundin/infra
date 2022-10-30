@@ -7,7 +7,7 @@ jobs:
       matrix:
         node-version: [16.x]
     steps:
-      - run: echo "🔎 Сейчас будет произведен поиск ошибок в typeScript"
-      - run: npm run ts
           with:
-            node-version: ${{ matrix.node-version }}
+          node-version: ${{ matrix.node-version }}
+      - run: npm ts
+       
