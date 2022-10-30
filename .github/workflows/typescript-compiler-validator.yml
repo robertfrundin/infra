@@ -1,8 +1,13 @@
 name: TypeScript Compiler Validator
 on: [push]
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
     steps:
       - run: echo "🔎 Сейчас будет произведен поиск ошибок в typeScript"
+        with:
+          node-version: ${{ matrix.node-version }}
       - run: npm run ts
