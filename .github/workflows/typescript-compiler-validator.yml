@@ -9,5 +9,5 @@ jobs:
     steps:
       - run: echo "🔎 Сейчас будет произведен поиск ошибок в typeScript"
       - run: npm run ts
-        with:
-          node-version: ${{ matrix.node-version }}
+          with:
+            node-version: ${{ matrix.node-version }}
