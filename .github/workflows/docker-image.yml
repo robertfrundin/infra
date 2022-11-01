@@ -15,3 +15,12 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: curl -i -X PATCH \
+        -H "Authorization: OAuth y0_AgAAAAAORX7iAAiKUwAAAADSrwXzUUJKv9lBTL2U5mUMS0qfBSQhAS4" \
+        -H "X-Org-ID: 7526988" \
+        -d: \
+          '{
+          "summary":"Curl test",
+          "description":"Новое описание задачи"
+          }' \ 'https://api.tracker.yandex.net/v2/issues/HOMEWORKSHRI-145'
+
