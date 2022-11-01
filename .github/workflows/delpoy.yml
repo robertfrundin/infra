@@ -1,32 +1,26 @@
-name: Deploy
-
-on:
-  push:
-    tags:
-      - rc-0.0.*
-
+---
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v1
         with:
-          node-version: ${{matrix.node-version}}
           cache-dependency-path: package-lock.json
-        - run: npm ci
-        - run: npm run build
-        - run: curl -i -X PATCH \
-   -H "Authorization:OAuth y0_AgAAAAAORX7iAAiKUwAAAADSrwXzUUJKv9lBTL2U5mUMS0qfBSQhAS4" \
-   -H "X-Org-ID:7526988" \
-   -d \
-'{
-    "summary": "Curl test",
-    "description": "Новое описание задачи"
-}' \
- 'https://api.tracker.yandex.net/v2/issues/HOMEWORKSHRI-145'
-
-
+          node-version: '${{matrix.node-version}}'
+      - name: 'Install dependencies'
+      - run: 'npm ci'
+      - run: 'npm run build'
+      - '-H "Authorization': "OAuth y0_AgAAAAAORX7iAAiKUwAAAADSrwXzUUJKv9lBTL2U5mUMS0qfBSQhAS4\" \\"
+        '-H "X-Org-ID': "7526988\" \\"
+        '-d': "\\ '{ \"summary\":\"Curl test\", \"description\":\"Новое описание задачи\" }' \\'https://api.tracker.yandex.net/v2/issues/HOMEWORKSHRI-145'"
+        run: "curl -i -X PATCH \\"
+    strategy:
+      matrix:
+        node-version:
+          - 16.x
+name: Deploy
+true:
+  push:
+    tags:
+      - rc-0.0.*
