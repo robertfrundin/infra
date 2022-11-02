@@ -19,8 +19,6 @@ jobs:
            -H "Authorization:OAuth y0_AgAAAAAORX7iAAiKUwAAAADSrwXzUUJKv9lBTL2U5mUMS0qfBSQhAS4" \
            -H "X-Org-ID:7526988" \
            -d \
-           '{
-            "summary": "CURL CHEEECK",
-           }' \
+           '{"summary": "CURL CHEEECK",}' \
            'https://api.tracker.yandex.net/v2/issues/HOMEWORKSHRI-145'
 
