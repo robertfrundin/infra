@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const fetch = require('node-fetch')
+import fetch from 'node-fetch'
 const { AUTH_TOKEN, ORG_ID, TICKET_QUERYPARAM } = process.env
 fetch(`https://api.tracker.yandex.net/v2/issues/${TICKET_QUERYPARAM}/comments`, {
   method: 'PATCH',
@@ -11,4 +11,4 @@ fetch(`https://api.tracker.yandex.net/v2/issues/${TICKET_QUERYPARAM}/comments`, 
   body: JSON.stringify({
     summary: 'FETCH CHEEECK',
   }),
-})
+}).then((res) => console.log(res.body))
