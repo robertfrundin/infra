@@ -5,6 +5,9 @@ import github from '@actions/github'
 let { AUTH_TOKEN, ORG_ID, TICKET_QUERYPARAM } = process.env
 console.log('1. Getting current ref:')
 const tag = github.context.ref.split('/').pop()
+function getReleaseNumber(tag) {
+  return Number(tag.split('.').pop())
+}
 const releaseNumber = getReleaseNumber(tag)
 
 fetch(`https://api.tracker.yandex.net/v2/issues/${TICKET_QUERYPARAM}`, {
