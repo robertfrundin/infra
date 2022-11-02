@@ -6,19 +6,15 @@ on:
       - rc-0.0.*
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
-    - run: curl -i -X PATCH \
-           -H "Authorization:OAuth y0_AgAAAAAORX7iAAiKUwAAAADSrwXzUUJKv9lBTL2U5mUMS0qfBSQhAS4" \
-           -H "X-Org-ID:7526988" \
-           -d \
-           '{"summary": "CURL CHEEECK",}' \
-           'https://api.tracker.yandex.net/v2/issues/HOMEWORKSHRI-145'
-
+      - uses: actions/checkout@v3
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+        env:
+          OAUTH_TOKEN: ${{ secrets.OAUTH_TOKEN }}
+          ORG_ID: ${{ secrets.ORG_ID }}
+          TICKET_ID: ${{ secrets.TICKET_ID }}
+      - run: npm run post
