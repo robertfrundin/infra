@@ -24,8 +24,17 @@ const execute = async (command, options) => {
   return res
 }
 const author = github.context.payload.pusher.name
-const commits = await execute('git', ['log', '--pretty=format:"%h %an %s"'])
-
+let prevTag = ''
+for (let i = 0; i < tag.length; i++) {
+  if (i !== tag.length - 1) {
+    prevTag += tag[i]
+  } else {
+    prevTag += String(Number(tag[i]) - 1)
+  }
+}
+const tagRange = `${prevTag}...${tag}`
+const commits = await execute('git', ['log', '--pretty=format:"%h %an %s"', tagRange])
+console.log(`Найденные коммиты:${commits}`)
 fetch(`https://api.tracker.yandex.net/v2/issues/${TICKET_QUERYPARAM}`, {
   method: 'PATCH',
   headers: {
