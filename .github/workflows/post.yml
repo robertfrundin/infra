@@ -1,5 +1,5 @@
-name: 'Release'
-run-name: Push release
+name: 'Release ticket update'
+run-name: Release ticket update
 
 on:
   push:

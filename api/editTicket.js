@@ -24,7 +24,7 @@ const execute = async (command, options) => {
   return res
 }
 const author = github.context.payload.pusher.name
-const commits = await exec('git', ['log', '--pretty=format:"%h %an %s"'])
+const commits = await execute('git', ['log', '--pretty=format:"%h %an %s"'])
 
 fetch(`https://api.tracker.yandex.net/v2/issues/${TICKET_QUERYPARAM}`, {
   method: 'PATCH',
