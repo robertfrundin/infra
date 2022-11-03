@@ -2,13 +2,29 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import fetch from 'node-fetch'
 import github from '@actions/github'
+import exec from '@actions/exec'
 let { AUTH_TOKEN, ORG_ID, TICKET_QUERYPARAM } = process.env
-console.log('1. Getting current ref:')
 const tag = github.context.ref.split('/').pop()
-function getReleaseNumber(tag) {
-  return Number(tag.split('.').pop())
+const execute = async (command, options) => {
+  let res = ''
+  let err = ''
+  await exec.exec(command, options, {
+    listeners: {
+      stdout: (data) => {
+        res += data.toString()
+      },
+      stderr: (data) => {
+        err += data.toString()
+      },
+    },
+  })
+  if (err) {
+    throw new Error(`Error: ${err}`)
+  }
+  return res
 }
-const releaseNumber = getReleaseNumber(tag)
+const author = github.context.payload.pusher.name
+const commits = await exec('git', ['log', '--pretty=format:"%h %an %s"'])
 
 fetch(`https://api.tracker.yandex.net/v2/issues/${TICKET_QUERYPARAM}`, {
   method: 'PATCH',
@@ -17,9 +33,11 @@ fetch(`https://api.tracker.yandex.net/v2/issues/${TICKET_QUERYPARAM}`, {
     'X-Org-ID': ORG_ID,
   },
   body: JSON.stringify({
-    summary: `Релиз ${releaseNumber}`,
+    summary: `Релиз ${tag}`,
+    description: `Ответственный за релиз: ${author}
+    Коммиты, попавшие в релиз:
+    ${commits}`,
   }),
 })
-  .then((res) => res.text())
-  .then((data) => console.log(data))
+  .then((res) => console.log('request finished with status:' + res.status))
   .catch(console.error)
